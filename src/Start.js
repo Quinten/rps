@@ -1,4 +1,6 @@
-import {Scene, Sprite} from 'verf';
+import {Scene, Sprite, BitmapText} from 'verf';
+
+import FontMetrics from './FontMetrics.js';
 
 export default class Start extends Scene {
     init ()
@@ -12,5 +14,13 @@ export default class Start extends Scene {
             this.engine.rps = this.rps.frame;
             this.engine.switchScene('level');
         });
+        let textA = this.add(new BitmapText({
+            text: 'RPS\n\nTAP TO START!',
+            x: 80,
+            y: 50,
+            font: 'font',
+            fillStyle: this.engine.foreground,
+            metrics: new FontMetrics()
+        }));
     }
 }

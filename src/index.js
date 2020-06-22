@@ -9,6 +9,7 @@ const game = new VerfGame({
     width: 160,
     height: 200,
     assets: [
+        {name: 'font', type: 'image', src: 'font.png'},
         {name: 'rps', type: 'image', src: 'rps.png'}
     ],
     scenes: [

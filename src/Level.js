@@ -1,9 +1,12 @@
-import {Scene, Sprite, Body} from 'verf';
+import {Scene, Sprite, Body, BitmapText} from 'verf';
 import Npc from './Npc.js';
+import FontMetrics from './FontMetrics.js';
 
 export default class Level extends Scene {
     init ()
     {
+        this.score = 0;
+        this.highscore = Number(localStorage.getItem('rpsscore'));
         this.camera.x = 80;
         this.camera.y = 100;
         this.player = this.add(new Sprite({name: 'rps', x: 80, y: 150, width: 16, height: 16, frame: this.engine.rps}).addBody(new Body()));
@@ -37,6 +40,13 @@ export default class Level extends Scene {
                 }
                 if (playerWins) {
                     npc.visible = false;
+                    this.score += 1;
+                    this.scoreText.text = 'SCORE\n' + this.score;
+                    if (this.score > this.highscore) {
+                        this.highscore  = this.score;
+                        localStorage.setItem('rpsscore', this.highscore);
+                        this.highscoreText.text = 'HISCORE\n' + this.highscore;
+                    }
                 } else {
                     this.player.visible = false;
                     this.engine.setTimeout(() => {
@@ -48,6 +58,24 @@ export default class Level extends Scene {
             this.npcs.push(npc);
             this.startY -= 50;
         }
+        this.scoreText = this.add(new BitmapText({
+            text: 'SCORE\n0',
+            x: 0,
+            y: 0,
+            font: 'font',
+            fillStyle: this.engine.foreground,
+            metrics: new FontMetrics(),
+            textAlign: 'left'
+        }));
+        this.highscoreText = this.add(new BitmapText({
+            text: 'HISCORE\n' + this.highscore,
+            x: 160,
+            y: 0,
+            font: 'font',
+            fillStyle: this.engine.foreground,
+            metrics: new FontMetrics(),
+            textAlign: 'right'
+        }));
     }
 
     update(time, delta)
