@@ -1,7 +1,7 @@
 {
-  "name": "tiny-verf-game",
+  "name": "rps",
   "version": "0.0.1",
-  "description": "A template for tiny verf games",
+  "description": "Rock Paper Scissors",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quinten/tiny-verf-game.git"
+    "url": "git+https://github.com/Quinten/rps.git"
   },
   "author": "Quinten Clause",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Quinten/tiny-verf-game/issues"
+    "url": "https://github.com/Quinten/rps/issues"
   },
-  "homepage": "https://github.com/Quinten/tiny-verf-game#readme",
+  "homepage": "https://github.com/Quinten/rps#readme",
   "dependencies": {
     "verf": "^0.2.3"
   },
