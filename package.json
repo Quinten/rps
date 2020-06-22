@@ -1,0 +1,31 @@
+{
+  "name": "tiny-verf-game",
+  "version": "0.0.1",
+  "description": "A template for tiny verf games",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production && zip -r game.zip public && stat -f%z game.zip",
+    "deploy": "git subtree push --prefix public/ origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quinten/tiny-verf-game.git"
+  },
+  "author": "Quinten Clause",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Quinten/tiny-verf-game/issues"
+  },
+  "homepage": "https://github.com/Quinten/tiny-verf-game#readme",
+  "dependencies": {
+    "verf": "^0.2.3"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
+    "terser-webpack-plugin": "^3.0.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
