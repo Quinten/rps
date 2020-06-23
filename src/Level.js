@@ -1,10 +1,16 @@
 import {Scene, Sprite, Body, BitmapText} from 'verf';
 import Npc from './Npc.js';
 import FontMetrics from './FontMetrics.js';
+const tm = require('tinymusic');
+const ac = typeof AudioContext !== 'undefined' ? new AudioContext() : new webkitAudioContext();
+
+const notes = ['D3 q', 'E3 q', 'F3 q', 'A3 q', 'B3 q'];
+let noteIndex = 4;
 
 export default class Level extends Scene {
     init ()
     {
+        noteIndex = 0;
         this.score = 0;
         this.highscore = Number(localStorage.getItem('rpsscore'));
         this.camera.x = 80;
@@ -15,6 +21,9 @@ export default class Level extends Scene {
         this.pointer.on('pointerdown', (e) => {
             if (e.worldX > 0 && e.worldX < 160) {
                 this.player.homeX = e.worldX;
+            }
+            if (ac.state === 'suspended') {
+                ac.resume();
             }
         });
         this.npcs = [];
@@ -47,11 +56,17 @@ export default class Level extends Scene {
                         localStorage.setItem('rpsscore', this.highscore);
                         this.highscoreText.text = 'HISCORE\n' + this.highscore;
                     }
+                    noteIndex++;
+                    if (noteIndex >= notes.length) {
+                        noteIndex = 0;
+                    }
+                    this.playSequence([notes[noteIndex]]);
                 } else {
                     this.player.visible = false;
                     this.engine.setTimeout(() => {
                         this.engine.switchScene('start');
                     }, 2000);
+                    this.playSequence(['B3 s', 'A3 es', 'F3 e', 'E3 e', 'D3 w']);
                 }
                 this.camera.shake();
             }, seperate: false});
@@ -98,5 +113,14 @@ export default class Level extends Scene {
     {
         let opt = [0, 1, 2].filter((o) => o !== this.engine.rps);
         return opt[Math.floor(Math.random() * 2)];
+    }
+
+    playSequence(seq)
+    {
+        let sequence = new tm.Sequence( ac, 120, seq);
+        sequence.loop = false;
+        sequence.gain.gain.value = .25;
+        sequence.staccato = 0.55;
+        sequence.play(ac.currentTime);
     }
 }
