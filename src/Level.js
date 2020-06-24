@@ -10,16 +10,17 @@ let noteIndex = 4;
 export default class Level extends Scene {
     init ()
     {
+        this.maxWidth = Math.min(this.viewport.width, this.viewport.height);
         noteIndex = 0;
         this.score = 0;
         this.highscore = Number(localStorage.getItem('rpsscore'));
-        this.camera.x = 80;
-        this.camera.y = 100;
-        this.player = this.add(new Sprite({name: 'rps', x: 80, y: 150, width: 16, height: 16, frame: this.engine.rps}).addBody(new Body()));
+        this.camera.x = this.maxWidth / 2;;
+        this.camera.y = this.viewport.height / 2;
+        this.player = this.add(new Sprite({name: 'rps', x: this.maxWidth/2, y: this.viewport.height*3/4, width: 16, height: 16, frame: this.engine.rps}).addBody(new Body()));
         this.player.homeX = this.player.x;
         this.camera.flash({color: this.engine.foreground});
         this.pointer.on('pointerdown', (e) => {
-            if (e.worldX > 0 && e.worldX < 160) {
+            if (e.worldX > 0 && e.worldX < this.maxWidth) {
                 this.player.homeX = e.worldX;
             }
             if (ac.state === 'suspended') {
@@ -28,8 +29,8 @@ export default class Level extends Scene {
         });
         this.npcs = [];
         this.startY = -50;
-        for (let n = 0; n < 6; n++) {
-            let npc = this.add(new Npc({name: 'rps', x: 16 + Math.random() * 128, y: this.startY, width: 16, height: 16, frame: this.getRF()}).addBody(new Body()));
+        for (let n = 0; n < 9; n++) {
+            let npc = this.add(new Npc({name: 'rps', x: 16 + Math.random() * (this.maxWidth - 32), y: this.startY, width: 16, height: 16, frame: this.getRF()}).addBody(new Body()));
             npc.body.vy = 100;
             this.world.addCollider({a: this.player, b: npc, callback: () => {
                 if (!npc.visible || !this.player.visible) {
@@ -84,7 +85,7 @@ export default class Level extends Scene {
         }));
         this.highscoreText = this.add(new BitmapText({
             text: 'HISCORE\n' + this.highscore,
-            x: 160,
+            x: this.maxWidth,
             y: 0,
             font: 'font',
             fillStyle: this.engine.foreground,
@@ -100,8 +101,8 @@ export default class Level extends Scene {
         }
         this.player.body.vx = (this.player.homeX - this.player.x) / 2 * 30;
         this.npcs.forEach((npc) => {
-            if (npc.body.top > 200) {
-                npc.body.y -= 300;
+            if (npc.body.top > this.viewport.height) {
+                npc.body.y -= 450;
                 npc.body.x = this.player.body.x;
                 npc.frame = this.getRF();
                 npc.visible = true;
@@ -122,5 +123,13 @@ export default class Level extends Scene {
         sequence.gain.gain.value = .25;
         sequence.staccato = 0.55;
         sequence.play(ac.currentTime);
+    }
+
+    resize(w, h) {
+        this.maxWidth = Math.min(w, h);
+        this.camera.x = this.maxWidth/2;
+        this.camera.y = h/2;
+        this.player.body.y = h*3/4 - 8;
+        this.highscoreText.x = this.maxWidth;
     }
 }
