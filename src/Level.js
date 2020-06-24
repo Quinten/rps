@@ -1,5 +1,6 @@
 import {Scene, Sprite, Body, BitmapText} from 'verf';
 import Npc from './Npc.js';
+import Particle from './Particle.js';
 import FontMetrics from './FontMetrics.js';
 const tm = require('tinymusic');
 const ac = typeof AudioContext !== 'undefined' ? new AudioContext() : new webkitAudioContext();
@@ -70,6 +71,9 @@ export default class Level extends Scene {
                     this.playSequence(['B3 s', 'A3 es', 'F3 e', 'E3 e', 'D3 w']);
                 }
                 this.camera.shake();
+                for (let p = 0; p < 20; p++) {
+                    this.add(new Particle({x: this.player.x, y: this.player.y}));
+                }
             }, seperate: false});
             this.npcs.push(npc);
             this.startY -= 50;
