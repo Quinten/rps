@@ -4,7 +4,10 @@ const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+
+const config = require('./package');
 
 module.exports = (env, argv) => {
 
@@ -51,6 +54,40 @@ module.exports = (env, argv) => {
                 })
             ]
         }
+
+        webpackConfig.plugins.push(
+            new FaviconsWebpackPlugin({
+                logo: './src/icon.png',
+                mode: 'webapp',
+                devMode: 'webapp',
+                prefix: '',
+                favicons: {
+                    path: '',
+                    background: '#fcfff7',
+                    theme_color: '#fcfff7',
+                    appName: config.name,
+                    appShortName: config.name,
+                    appDescription: config.description,
+                    developerName: config.author,
+                    developerURL: config.homepage,
+                    orientation: 'any',
+                    scope: './',
+                    start_url: './',
+                    version: config.version,
+                    pixel_art: true,
+                    icons: {
+                        android: true,
+                        coast: false,
+                        yandex: false,
+                        firefox: false,
+                        windows: true,
+                        appleIcon: true,
+                        appleStartup: false,
+                        favicons: true
+                    }
+                }
+            })
+        );
     }
 
     return webpackConfig;
