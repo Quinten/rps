@@ -1,4 +1,4 @@
-import {VerfGame, Pointer, World} from 'verf';
+import {VerfGame, Pointer, World, Keys} from 'verf';
 import Start from './Start.js';
 import Level from './Level.js';
 import ClipPlugin from './ClipPlugin.js';
@@ -19,6 +19,7 @@ const game = new VerfGame({
     plugins: [
         {name: 'clip', class: ClipPlugin, type: 'scene'},
         {name: 'world', class: World, type: 'scene'},
-        {name: 'pointer', class: Pointer, type: 'scene'}
+        {name: 'pointer', class: Pointer, type: 'scene'},
+        {name: 'keys', class: Keys, type: 'scene'}
     ]
 });

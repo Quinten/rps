@@ -103,6 +103,12 @@ export default class Level extends Scene {
         if (!this.active) {
             return;
         }
+        if (this.keys.left) {
+            this.player.homeX = Math.min(this.maxWidth - 8, Math.max(8, this.player.homeX - (4 * ((1000 / 60) / delta))));
+        }
+        if (this.keys.right) {
+            this.player.homeX = Math.max(8, Math.min(this.maxWidth - 8, this.player.homeX + (4 * ((1000 / 60) / delta))));
+        }
         this.player.body.vx = (this.player.homeX - this.player.x) / 2 * 30;
         this.npcs.forEach((npc) => {
             if (npc.body.top > this.viewport.height) {

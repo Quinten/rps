@@ -15,6 +15,10 @@ export default class Start extends Scene {
             this.engine.rps = this.rps.frame;
             this.engine.switchScene('level');
         });
+        this.keys.once('keyup', () => {
+            this.engine.rps = this.rps.frame;
+            this.engine.switchScene('level');
+        });
         this.textA = this.add(new BitmapText({
             text: 'RPS\n\nTAP TO START!',
             x: this.maxWidth/2,
