@@ -37,7 +37,7 @@ export default class Level extends Scene {
         this.startY = -50;
         for (let n = 0; n < 9; n++) {
             let npc = this.add(new Npc({name: 'rps', x: 16 + Math.random() * (this.maxWidth - 32), y: this.startY, width: 16, height: 16, frame: this.getRF()}).addBody(new Body()));
-            npc.body.vy = 100;
+            npc.body.vy = 80;
             this.world.addCollider({a: this.player, b: npc, callback: () => {
                 if (!npc.visible || !this.player.visible) {
                     return;
@@ -67,6 +67,9 @@ export default class Level extends Scene {
                     if (noteIndex >= notes.length) {
                         noteIndex = 0;
                     }
+                    this.npcs.forEach((npc) => {
+                        npc.body.vy += 1;
+                    });
                     this.playSequence([notes[noteIndex]]);
                 } else {
                     this.player.visible = false;
