@@ -28,6 +28,11 @@ export default class Level extends Scene {
                 ac.resume();
             }
         });
+        this.pointer.on('pointermove', (e) => {
+            if (this.pointer.isDown && e.worldX > 0 && e.worldX < this.maxWidth) {
+                this.player.homeX = e.worldX;
+            }
+        });
         this.npcs = [];
         this.startY = -50;
         for (let n = 0; n < 9; n++) {
