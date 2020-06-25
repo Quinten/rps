@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Quinten/rps#readme",
   "dependencies": {
     "tinymusic": "^1.0.0",
-    "verf": "^0.2.3"
+    "verf": "^0.2.5"
   },
   "devDependencies": {
     "html-webpack-plugin": "^4.3.0",

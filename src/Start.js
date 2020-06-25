@@ -12,12 +12,13 @@ export default class Start extends Scene {
         this.rps.addAnimation({name: 's', frames: [0, 1, 2], fps: 8});
         this.rps.animation = 's';
         this.pointer.once('pointerdown', () => {
-            this.engine.rps = this.rps.frame;
-            this.engine.switchScene('level');
+            this.startLevel();
         });
         this.keys.once('keyup', () => {
-            this.engine.rps = this.rps.frame;
-            this.engine.switchScene('level');
+            this.startLevel();
+        });
+        this.keys.once('padup', () => {
+            this.startLevel();
         });
         this.textA = this.add(new BitmapText({
             text: 'RPS\n\nTAP TO START!',
@@ -27,6 +28,12 @@ export default class Start extends Scene {
             fillStyle: this.engine.foreground,
             metrics: new FontMetrics()
         }));
+    }
+
+    startLevel()
+    {
+        this.engine.rps = this.rps.frame;
+        this.engine.switchScene('level');
     }
 
     resize(w, h) {
