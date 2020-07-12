@@ -138,7 +138,7 @@ export default class Level extends Scene {
     {
         let sequence = new tm.Sequence( ac, 120, seq);
         sequence.loop = false;
-        sequence.gain.gain.value = .25;
+        sequence.gain.gain.value = .15;
         sequence.staccato = 0.55;
         sequence.play(ac.currentTime);
     }
